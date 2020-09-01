@@ -1,25 +1,46 @@
-import React from 'react';
-import logo from './logo.svg';
+import React,{useEffect,useState} from 'react';
+
 import './App.css';
+import axios from 'axios';
+const Card =({user}) =>{
+  return(     
+    <div>
+                <img style={{width:"100px",height:"100px"}}src="https://drive.google.com/uc?export=view&id=1aj_vT5zjJlkdEQ_VcCsdnvpVBi-Fjwyb" class="card-img-top" alt="..." />
+                <div class="card-body" >
+                  <>
+                    <h2 >{user.name}</h2>
+                    <p >{user.username}</p>
+                    <p>{user.email}</p>
+                    </>
+                </div>
+              
+          
+        
+
+                </div>    
+  )
+}
+
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+  const[lisOfUser,setlistOfUser]=useState([]);
+  const[eroor,seteroor]=useState(null);
+  useEffect(()=>
+  {
+    axios.get('https://jsonplaceholder.typicode.com/users?fbclid=IwAR2NTnuLGL-MH1FWlla_1QAvOXoIhcY7SceTbc1D4wLTiDzgHu3jmAIo87Q')
+    .then(function(reponse){
+      setlistOfUser(reponse.data)
+    })
+    .catch(function(error)
+    {
+
+    })
+  },[]);
+  
+  return(
+    <div style={{display:'flex',flexDirection:"row",justifyContent:"space-evenly",flexWrap:"wrap"}}>
+   {lisOfUser.map((user,i) => <Card key={i} user={user} />)}
+   </div>
   );
 }
 
